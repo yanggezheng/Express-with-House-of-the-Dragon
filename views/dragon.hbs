@@ -1,17 +1,13 @@
-<h3>Dragon</h3>
-<table align="center">
-    <tr>
-        <th>Dragon Name</th>
-        <th>Rider</th>
-        <th>Identification</th>
-        <th>House</th>
-    </tr>
-    {{#each dragons as |dragon|}}
-    <tr>
-        <th>{{dragon.dragonName}}</th>
-        <th>{{dragon.rider}}</th>
-        <th>{{dragon.identification}}</th>
-        <th>{{dragon.house}}</th>
-    </tr>
-  {{/each}}
-</table>
+<h3>Add a Dragon!</h3>
+<form method="POST" action="">
+    <input type="text" name="dragonName" value="">
+    <br>
+    <input type="text" name="rider" value="">
+    <br>
+    <input type="text" name="identification" value="">
+    <br>
+    <input type="text" name="house" value="">
+    <br>
+    <input type="submit" value="Submit">
+</form>
+

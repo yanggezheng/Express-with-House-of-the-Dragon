@@ -53,6 +53,9 @@ app.use(function(req, res, next){
         next();
     }
 })
+app.get('/dragon', (req, res) => {
+    res.render('dragon');
+});
 app.get('/', (req, res)=>{
     const House = req.query['House'];
     console.log('house is ', House);
@@ -62,5 +65,18 @@ app.get('/', (req, res)=>{
     else {
     res.render('index', {dragons: dragons});
 }})
+app.post('/dragon', (req, res) => {
+    if (req.body) {
+        if (req.session.counter > 0) {
+            req.session.counter++;
+        }else {
+            req.session['counter'] = 1;
+        }
+        dragons.push(req.body);
+        res.redirect('/');
+    }else {
+        res.send("Invalid user inputs");
+    }
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(3000);
