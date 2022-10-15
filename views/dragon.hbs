@@ -1,0 +1,17 @@
+<h3>Dragon</h3>
+<table align="center">
+    <tr>
+        <th>Dragon Name</th>
+        <th>Rider</th>
+        <th>Identification</th>
+        <th>House</th>
+    </tr>
+    {{#each dragons as |dragon|}}
+    <tr>
+        <th>{{dragon.dragonName}}</th>
+        <th>{{dragon.rider}}</th>
+        <th>{{dragon.identification}}</th>
+        <th>{{dragon.house}}</th>
+    </tr>
+  {{/each}}
+</table>

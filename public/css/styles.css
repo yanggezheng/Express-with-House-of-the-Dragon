@@ -1,1 +1,12 @@
 /* styles.css */
+
+h1{
+    background-color: wheat;
+    font-size: large;
+}
+body {
+    text-align: center;
+}
+table {
+    width: 50%;
+}
