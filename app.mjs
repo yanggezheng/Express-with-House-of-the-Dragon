@@ -3,13 +3,12 @@ import express from 'express';
 import path from 'path';
 import url from 'url';
 import session from 'express-session';
-
 const app = express();
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const sessionOptions = {
 	secret: 'secrets of targaryen',
-    saveUninitialized: true,
-	resave: true
+	resave: true,
+	saveUninitialized: true
 };
 app.use(session(sessionOptions));
 const dragons =[{dragonName:'Syrax', rider: 'Rhaenyra', identification: 'giant yellow-scaled dragon', house: 'Targaryen'},
@@ -41,20 +40,23 @@ app.use(function(req, res, next){
         }
     }
     next();
-})
+});
 app.use(function(req, res, next){
-    if(req.get("Host")===undefined){
-        res.statusCode=400;
-        res.statusMessage="Bad Request";
-        res.contentType="text/html";
-        res.charset="utf-8";
-        res.send("Bad Request");
+    if(req.get('Host') === undefined){
+        res.statusCode = 400;
+        res.statusMessage = 'Bad Request';
+        res.contentType = 'text/html';
+        res.charset = 'utf-8';
+        res.send('Bad Request');
     }else{
         next();
     }
-})
+});
 app.get('/dragon', (req, res) => {
     res.render('dragon');
+});
+app.get('/stats', (req, res) => {
+    res.render('stats');
 });
 app.get('/', (req, res)=>{
     const House = req.query['House'];
@@ -64,19 +66,22 @@ app.get('/', (req, res)=>{
     }
     else {
     res.render('index', {dragons: dragons});
-}})
+}});
 app.post('/dragon', (req, res) => {
     if (req.body) {
-        if (req.session.counter > 0) {
-            req.session.counter++;
+        if (req.session.count > 0) {
+            req.session.count++;
         }else {
-            req.session['counter'] = 1;
+            req.session['count'] = 1;
         }
         dragons.push(req.body);
         res.redirect('/');
     }else {
         res.send("Invalid user inputs");
     }
+});
+app.get('/stats', (req, res) => {
+    res.render('stats', {count: req.session.count});
 });
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(3000);
