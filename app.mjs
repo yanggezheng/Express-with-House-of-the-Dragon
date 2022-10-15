@@ -2,8 +2,16 @@
 import express from 'express';
 import path from 'path';
 import url from 'url';
+import session from 'express-session';
+
 const app = express();
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const sessionOptions = {
+	secret: 'secrets of targaryen',
+    saveUninitialized: true,
+	resave: true
+};
+app.use(session(sessionOptions));
 const dragons =[{dragonName:'Syrax', rider: 'Rhaenyra', identification: 'giant yellow-scaled dragon', house: 'Targaryen'},
 {dragonName:'Caraxes', rider: 'Daemon', identification: 'large red dragon', house: 'Targaryen'},
 {dragonName:'Seasmoke', rider: 'Laenor', identification: 'silver-gray dragon', house: 'Velaryon'},
@@ -46,12 +54,13 @@ app.use(function(req, res, next){
     }
 })
 app.get('/', (req, res)=>{
-    const House = req.query.house ?? "";
-    // res.render('dragon',{dragons:dragons.filter(dragons => dragons.house=House)})
-    res.render('dragon',{dragons:dragons})
-})
-app.get('/', (req, res) =>{
-    res.render('index');
-})
+    const House = req.query['House'];
+    console.log('house is ', House);
+    if (House) {
+        res.render('index', {dragons: dragons.filter(dragon => dragon.house === House)});
+    }
+    else {
+    res.render('index', {dragons: dragons});
+}})
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(3000);
